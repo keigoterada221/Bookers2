@@ -1,0 +1,19 @@
+<% if flash[:notice] %>
+  <p class="message"><%= flash[:notice] %></p>
+<% end %>
+
+<!-- JSの１３章で追記 -->
+<h1 class="jquery">Hello jQuery!</h1>
+
+
+<div class="top-page">
+<h1>Welcome to <span class="glyphicon glyphicon-book" aria-hidden="true"></span>Bookers  !!</h1>
+<p>In <span class="glyphicon glyphicon-book" aria-hidden="true"></span>Bookers,<br>
+you can share and exchange your opinions , inpressions , and emotions<br>
+about various books!
+</p>
+<div class="btn-group-vertical">
+ <div class="top-btn"><%= link_to "Log in",new_user_session_path, class: "btn btn-info"%></div>
+<div class="top-btn"><%= link_to "Sign Up",new_user_registration_path,class: "btn btn-success" %></div>
+</div>
+</div>

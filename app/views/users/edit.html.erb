@@ -1,0 +1,24 @@
+
+<div class="user-edit">
+
+<%= render 'layouts/error_messages2'%>
+
+
+<h1>User info</h1>
+<form  accept-charset="UTF-8" action="/users/<%=current_user.id%>" method="post">
+	<input name="utf-8" type="hidden"value="" >
+	<input type="hidden" name="_method" value="PUT">
+	<input type="hidden" name="authenticity_token">
+<h3>Name</h3>
+<input type="text" name="user[name]" value="<%=@user.name%>">
+
+<h3>Image</h3>
+<input type="file" name="user[profile_image_id]" %>
+
+<h3>Introduction</h3>
+<div>
+<textarea name="user[introduction]" ><%=@user.introduction %></textarea><br>
+</div>
+<input type="submit" name="commit" value="Update User" ata-disable-with="Update User">
+</form>
+</div>

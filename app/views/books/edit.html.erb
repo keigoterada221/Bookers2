@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+
+
+<div class="book-edit">
+<h1>Editing Book</h1>
+
+<form  accept-charset="UTF-8" action="/books/<%=@book.id%>" method="post">
+	<input name="utf-8" type="hidden" name="utf-8" value="" >
+	<input type="hidden" name="_method" value="PUT">
+	<input type="hidden" name="authenticity_token">
+<%= render 'layouts/error_messages'%>
+<div>
+<h4>Title</h4>
+<input  class="edit-form" type="text" name="book[title]" id="book_title" value="<%=@book.title %>">
+</div>
+
+<div>
+<h4>Opinion</h4>
+<textarea class="edit-form" name="book[body]" id="book_body" ><%=@book.body %></textarea><br>
+</div>
+
+<button class="btn btn-primary book-edit-btn">
+	<input class="btn btn-primary book-edit-btn" type="submit" name="commit" value="Update Book" data-disable-with="Update Book" >
+</button><br>
+</form>
+
+
+
+
+<%= link_to "Show" ,book_path %>
+<%="|"%>
+<%= link_to "Back" ,books_path %>
+
+
+</div>
+</body>
+</html>

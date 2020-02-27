@@ -1,0 +1,18 @@
+<% book.books_comments.each do |books_comment| %>
+<tr>
+	<td class="comment-user-name">
+		<%= books_comment.user.name %>
+	</td>
+	<td class="comment-comment">
+		<%= books_comment.comment %>
+	</td>
+	<% if book.user == current_user %>
+	<td>
+		<%= link_to "編集",edit_book_books_comment_path(book.id,books_comment.id),class: "btn btn-success"%>
+	</td>
+	<td>
+		<%= link_to "消去" ,book_books_comment_path(book.id,books_comment.id),method: :delete,"data-confirm" => "本当に消しますか？",class: "btn btn-danger", remote: true %>
+	</td>
+	<% end %>
+</tr>
+<% end %>

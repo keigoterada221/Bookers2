@@ -1,0 +1,25 @@
+<!-- ユーザー情報 -->
+<h1>User info</h1>
+<%= attachment_image_tag @user, :profile_image,:fill, 60 ,60,format: "jpeg", fallback:"no_image.jpg" %>
+<p>name<%= @user.name %></p>
+<p>introduction<%= @user.introduction %></p>
+<% if @user.id == current_user.id %>
+	<p><%= link_to "編集ボタン",edit_user_path(@user) %></p>
+<% end %>
+<!-- ここから新規投稿部分 -->
+<h1>New book</h1>
+<!-- form_for部分(@bookは=Book.new) -->
+<%= form_for(@book) do |f| %>
+
+<!-- render入れる -->
+
+
+<h4>Title</h4>
+<%= f.text_field :title %>
+
+<h4>Body</h4>
+<%= f.text_area :body %>
+
+<br><%= f.submit "Create Book" %></br>
+
+<% end %>

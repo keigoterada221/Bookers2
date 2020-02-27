@@ -1,0 +1,128 @@
+<div class="container">
+	<div class="row">
+		 <div class="col-xs-3">
+<%= render 'users/mypage&post', {user: current_user,users: @users,book: @book} %>
+		 </div>
+<div class="col-xs-9">
+		<!-- clearfixは不要 -->
+<div class="main">
+
+<!-- もし１を取得したらUser側を表示 -->
+ <% if params[:search_select] == "1" %>
+
+<h1>Users</h1>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>image</th>
+			<th>name</th>
+		</tr>
+	</thead>
+
+	<tbody>
+<!--  変数bookを使ってtitle,bodyを以下で表示  -->
+		<% @users.each do |user| %>
+		<tr>
+			<td>
+				<%= attachment_image_tag user, :profile_image, size: 50, fallback:"no_image.jpg"%>
+ 			</td>
+			<td>
+				<%= user.name %>
+		    </td>
+
+		    <td>
+		    	<%= link_to "フォロー数：#{user.followings.count}",follows_user_path(user.id) %>
+		    </td>
+
+		    <td>
+		    	<%= link_to "フォロワー数：#{user.followers.count}人",followers_user_path(user.id) %>
+		    </td>
+
+			<td>
+				 <% if current_user != user %>
+        			<% if user.followed_by?(current_user) %>
+            		<p><%=link_to "フォローを外す", user_relationships_path(user.id), method: :delete %></p>
+        			<% else %>
+            		<p><%=link_to "フォローする", user_relationships_path(user.id), method: :post %></p>
+        			<% end %>
+    			<% end %>
+    		</td>
+		    <td>
+				<%= link_to "Show" ,user_path(user.id) %>
+			</td>
+		</tr>
+		<% end %>
+	</tbody>
+</table>
+<%= paginate @users,class: "paginate" %>
+
+<%elsif params[:search_select] == "2" %>
+
+<h1>Books</h1>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th></th>
+			<th>Title</th>
+			<th>Opinion</th>
+			<th></th>
+			<th></th>
+		</tr>
+	</thead>
+
+	<tbody>
+<!--  変数bookを使ってtitle,bodyを以下で表示  -->
+		<% @books.each do |book| %>
+		<tr>
+			<td>
+				<!-- 下記のbook.userはブロック変数book
+				のuser_idで関連づけているユーザーのアイコンを表示 -->
+				<%= link_to user_path(book.user) do %>
+				<%= attachment_image_tag book.user, :profile_image, size:50, fallback:"no_image.jpg" %>
+				<% end %>
+ 			</td>
+			<td>
+				<%= link_to book.title,book_path(book) %>
+		    </td>
+			<td>
+				<%= book.body %>
+			</td>
+			<td>
+				<% if book.favorite_by?(current_user) %>
+			 	<li>
+				 	<%= link_to book_favorites_path(book.id),method: :delete do %>
+				 	<i class="fa fa-heart" aria-hidden="true" style="color: red;"></i>
+				 	<%= book.favorites.count %>
+				 	<% end %>
+			    </li>
+			    <% else %>
+			    <li>
+			    	<%= link_to book_favorites_path(book.id),method: :post do %>
+			    	<i class="fa fa-heart-o" aria-hidden="true"></i>
+			    	<%= book.favorites.count %>
+			    	<% end %>
+			    </li>
+			    <% end %>
+
+			</td>
+			<td>
+				<%= link_to "コメント数：#{book.books_comments.count}",book_path(book.id) %>
+			</td>
+			<td>
+				<% if current_user != book.user %>
+					<% if book.user.followed_by?(current_user) %>
+						<p><%= link_to "フォローを外す",user_relationships_path(book.user.id),method: :delete %></p>
+					<% else %>
+						<p><%= link_to "フォローする", user_relationships_path(book.user.id),method: :post %></p>
+					<% end %>
+				<% end %>
+			</td>
+		</tr>
+		<% end %>
+	</tbody>
+</table>
+		<%= paginate @books,class: "paginate" %>
+<% end %>
+</div>

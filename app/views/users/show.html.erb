@@ -1,0 +1,51 @@
+
+<% if flash[:notice] %>
+<p class="message"><%= flash[:notice] %></p>
+<% end %>
+<div class="container">
+ <div class="row">
+ 	<div class="col-xs-3">
+  		<%= render 'users/mypage&post', {user: @user,book: @book} %>
+	</div>
+	<div class="col-xs-9">
+<!-- clearfixは不要 -->
+<div class="main">
+<h1>Books</h1>
+
+<table class="table table-striped">
+<thead>
+	<tr>
+		<th></th>
+		<th>Title</th>
+		<th>Opinion</th>
+	</tr>
+</thead>
+
+<tbody>
+<!--  変数bookを使ってtitle,bodyを以下で表示  -->
+	<% @books.each do |book| %>
+	<tr>
+		<td>
+			<!-- 下記のbook.userはブロック変数book
+			のuser_idで関連づけているユーザーのアイコンを表示 -->
+			<%= attachment_image_tag book.user, :profile_image, :fill,50,50, fallback:"no_image.jpg" %>
+			</td>
+		<td>
+			<%= link_to book.title,book_path(book) %>
+	    </td>
+		<td>
+			<%= book.body %>
+		</td>
+	</tr>
+	<% end %>
+</tbody>
+</table>
+</div>
+	</div>
+	</div>
+	<!-- 地図を表示 -->
+	<%= render "users/map",user: @user %>
+
+</div>
+
+

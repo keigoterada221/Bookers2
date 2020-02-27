@@ -1,0 +1,31 @@
+<div class="container">
+	<div class="row">
+					<div class="col-xs-3">
+					<%= render 'users/mypage&post', {user: current_user,books: @books,book: @book} %>
+					</div>
+<div class="col-xs-9">
+	<!-- clearfixは不要 -->
+<h1>Books</h1>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th></th>
+			<th>Title</th>
+			<th>Opinion</th>
+			<th></th>
+			<th></th>
+		</tr>
+	</thead>
+
+	<tbody>
+<!--  変数bookを使ってtitle,bodyを以下で表示  -->
+		<% @books.each do |book| %>
+		<%= render "books/books_index",book: book %>
+		<% end %>
+	</tbody>
+</table>
+		<%= paginate @books,class: "paginate" %>
+</div>
+</div>
+</div>

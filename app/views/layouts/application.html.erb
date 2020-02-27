@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= csrf_meta_tags %>
+ <%= stylesheet_link_tag    'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'  %>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookers</title>
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,600,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+  </head> 
+
+  <body>
+                  <div class="header">
+                    <span class="app-name">Bookers</span>
+
+                    <span class="header-btn">
+                               <% if user_signed_in? %>
+                      <li class="glyphicon glyphicon-home" aria-hidden="true">
+                        <%= link_to "Home", user_path(current_user),class: "header-btn-text"%>
+                      </li>
+
+
+                      <li class="glyphicon glyphicon-user" aria-hidden="true">
+                        <%= link_to "Users",users_path,class: "header-btn-text" %>
+                      </li>
+                      <li class="glyphicon glyphicon-book" aria-hidden="true">
+                        <%= link_to "Books",books_path,class: "header-btn-text" %>
+                      </li>
+
+
+                      <li class="glyphicon glyphicon-log-in" aria-hidden="true">
+                        <%= link_to "logout",destroy_user_session_path, method: :delete,class: "header-btn-text" %>
+                      </li>
+                    <% else %>
+                      <li class="glyphicon glyphicon-home" aria-hidden="true">
+                        <%= link_to "Home",root_path,class: "header-btn-text" %>
+                      </li>
+
+
+                      <li class="glyphicon glyphicon-link" aria-hidden="true">
+                        <%= link_to "About",home_about_path,class: "header-btn-text" %>
+                      </li>
+                      <li class="glyphicon glyphicon-edit" aria-hidden="true">
+                        <%= link_to "Sign up", new_user_registration_path,class: "header-btn-text" %>
+                      </li>
+
+
+                      <li class="glyphicon glyphicon-log-in" aria-hidden="true">
+                        <%= link_to "login", new_user_session_path,class: "header-btn-text" %>
+                      </li>
+                    <% end %>
+                </span>
+                </div>
+    <!-- 検索機能実装 -->
+<% if user_signed_in? %>
+<li class="search_tag">
+  <%= form_with url:"/search",method: :get, local: true do |f| %>
+  <%= f.text_field :search,placeholder:"検索内容を入力" %>
+  <%= f.select :search_select,[["User","1"],["Book","2"]] %>
+  <%= f.select :word_search,[["完全一致","完全一致"],["前方一致","前方一致"],["後方一致","後方一致"],["部分一致","部分一致"]] %>
+  <%= f.submit "検索"%>
+  <% end %>
+</li>
+<% end %>
+
+    <%= yield %>
+
+
+
+
+<footer>
+                  <p class="footer-text">CopyRight Infratop.inc</p>
+                </footer>
+    </body>
+
+</html>

@@ -1,0 +1,6 @@
+<%= form_with model:[book,books_comment], remote: true do |f| %>
+	<div class="comment-area">
+		<%= f.text_area :comment %>
+	</div>
+		<%= f.submit "送信する" %>
+<% end %>
